@@ -1,0 +1,113 @@
+<!--
+<p>
+  my-bru-map works!
+</p>
+<button (click)="onClickMe()">{{myMapItems.mapType}}</button>
+<button (click)="onClickMe()">{{myMapItems.mapMenu}}</button>
+
+
+(markerClick)="onMouseClick(infoWindow, gm,item,item.iconUrl)"
+-->
+
+<form class="example-form" #myform="ngForm">
+
+    <h1>{{brumapService.MapItems.mapMenu}}</h1>
+
+  <agm-map 
+    #gm 
+    [latitude]="myMapItems.mapLat" 
+    [longitude]="myMapItems.mapLng" 
+    [zoom]="myMapItems.mapZoom"
+    [mapTypeId]="myMapItems.mapType"
+    (mapClick)="onMouseClick( $event)"
+   >
+
+  <agm-marker    
+        [latitude]="myMapItems.mapLat"
+        [longitude]="myMapItems.mapLng"
+        [iconUrl]="{
+          url:imgLocation
+        }"
+       
+  ></agm-marker>  
+
+  <agm-circle
+  (circleClick)="onMouseClick( $event)"
+  
+  [latitude]="myMapItems.mapLat"
+  [longitude]="myMapItems.mapLng"
+  [radius]="myMapItems.mapRadius"
+  [fillColor]="'green'"
+  
+  >
+ </agm-circle>
+
+ <ng-template 
+    [ngIf]="myMapItems.mapMenu=='speeltuigen'"> 
+ 
+      <agm-marker *ngFor="let item of myResultsSpeel; let i =index"
+      
+      (markerClick)="clickedMarker(item,infoWindow,i)"
+      (markerRightClick)="clickedMarkerRight(item)"
+      [latitude]="item.geometry.coordinates[1]"
+      [longitude]="item.geometry.coordinates[0]"
+      [iconUrl]="{
+        url: imgIcon
+      }"
+      
+      >
+      <agm-info-window #infoWindow>{{item.properties.TYPE }} - {{item.properties.STATUS}}</agm-info-window>
+      </agm-marker>
+  </ng-template>
+
+  <ng-template  
+     [ngIf]="myMapItems.mapMenu=='zandbakken'" > 
+      <agm-marker *ngFor="let item of myResultsZand; let i =index"
+
+        (markerClick)="clickedMarker(item,infoWindow,i)"
+        (markerRightClick)="clickedMarkerRight(item)"
+
+        [latitude]="item.geometry.coordinates[0][0][1]"
+        [longitude]="item.geometry.coordinates[0][0][0]"
+       
+        >    
+        <agm-info-window #infoWindow>{{item.properties.TYPE }} - {{item.properties.STATUS}}</agm-info-window>  
+      </agm-marker>
+  </ng-template>
+
+  <ng-template
+    [ngIf]="myTargetSet"  
+    >
+    <agm-direction
+      [origin]="myOrigin"
+      [destination]="myDestination"
+      [travelMode]="myMapItems.mapTravelMode"
+    >
+
+    </agm-direction>
+  </ng-template>
+
+</agm-map>
+
+</form>
+
+<!--
+
+   [label]="{
+        color: 'blue' ,
+        text: item.properties.TYPE + ' - '  + item.properties.STATUS
+        }"
+
+
+[label]="{
+      color: 'blue' ,
+      text: item.properties.TYPE + ' - '  + item.properties.STATUS
+      }" 
+
+      [waypoints]="waypoints" 
+      [renderOptions]="renderOptions" 
+      [markerOptions]="markerOptions" 
+
+
+
+-->

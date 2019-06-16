@@ -1,0 +1,46 @@
+
+<div>
+  <mat-form-field>
+    <mat-label>Map Options</mat-label>
+    <mat-select [value]="myMenuOptions[1]" [(ngModel)]="brumapService.MapItems.mapMenu">
+      <mat-option (click)="clickMenu(x)" *ngFor="let x of myMenuOptions" 
+      [value]="x"
+      >{{ x }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  
+  <mat-form-field>
+    <mat-label>Map types</mat-label>
+      <mat-select  [value]="myMenuMaptypes[0]" [(ngModel)]="brumapService.MapItems.mapType">
+        <mat-option (click)="clickMapItem(x)" *ngFor="let x of myMenuMaptypes"     
+        [value]="x"    
+        >{{ x }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Travel mode</mat-label>
+      <mat-select [value]="myMenuTravelMode[0]" [(ngModel)]="brumapService.MapItems.mapTravelMode">
+        <mat-option  (click)="clickMapTravel(x)" *ngFor="let x of myMenuTravelMode"
+        [value]="x"
+        >{{x}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+</div>
+
+<div>
+  <label >Cirkel radius:  {{mySliderValue[myIndex]}} meter  </label>
+
+<mat-slider #slider min="0" max="10" step="1" 
+  value={{myIndex}}
+  [(ngModel)]="myIndex"
+  (change)="OnChangeSlider()" 
+  ></mat-slider>
+    
+ </div>
+
+<app-my-bru-map *ngIf="brumapService.MapItems" [myMapItems]="brumapService.MapItems" ></app-my-bru-map>
+<!--
+<app-my-bru-map *ngIf="3" [myItems]="mySliderValue[myIndex]" ></app-my-bru-map>
+-->
